@@ -1,8 +1,8 @@
 import axios from "axios";
 import queryString from "query-string";
 
-
-const baseURL = "http://localhost:5000/api/v1/";
+// const baseURL = "http://localhost:5000/api/v1/";
+const baseURL = "http://authorization-back.vercel.app/api/v1/";
 
 const publicClient = axios.create({
   baseURL,
