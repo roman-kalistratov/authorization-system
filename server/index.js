@@ -32,7 +32,7 @@ const storageUser = multer.diskStorage({
 });
 const uploadAvatar = multer({ storage: storageUser });
 //middlewares
-// app.use(cors({ origin: true, credentials: true }));
+
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
