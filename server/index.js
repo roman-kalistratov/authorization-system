@@ -7,7 +7,7 @@ import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
 import multer from "multer";
 
-// const app = express();
+const app = express();
 // const allowedOrigins = ['https://authorizationrk.vercel.app'];
 // const corsOptions = {
 //   origin: function (origin, callback) {
