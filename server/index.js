@@ -8,17 +8,6 @@ import userRoute from "./routes/user.route.js";
 import multer from "multer";
 
 const app = express();
-// const allowedOrigins = ['https://authorizationrk.vercel.app'];
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true
-// };
 
 // multer settings
 const storageUser = multer.diskStorage({
@@ -30,9 +19,9 @@ const storageUser = multer.diskStorage({
   },
 });
 const uploadAvatar = multer({ storage: storageUser });
+
 //middlewares
 app.use(cors({ origin: true, credentials: true }));
-// app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
