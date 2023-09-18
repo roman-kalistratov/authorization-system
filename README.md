@@ -1,13 +1,15 @@
 ## The project authorization-system:
 
 - User authentication and authorization using JWT tokens.
-- Ability to change passwords.
-- Ability to search media or person.
-- Ability to add comments for media.
-- Ability to add media to favorites.
-- Ability to view details for media.
-- Ability to sort media by popularity and top ratings.
-
+- Refresh tokens.
+- Forgot password.
+- Reset password.
+- Sign in with base form.
+- Sign up.
+- Sign in with code.
+- Validate form
+- Protected page
+  
 ## Configuration
 server/.env : 
 
@@ -50,15 +52,14 @@ server:
 [React Toastify](https://github.com/fkhadra/react-toastify)<br>
 [Mongoose](https://mongoosejs.com/)<br>
 [ExpressJS](https://expressjs.com/)<br>
-[Express Validator](https://express-validator.github.io/docs/)<br>
 [React Router](https://reactrouter.com/)<br>
 [Redux](https://redux.js.org/)<br>
 [Formik](https://formik.org/)<br>
 [Yup](https://github.com/jquense/yup/)<br>
 [Axios](https://axios-http.com/)<br>
-[ThemovieDB](https://www.themoviedb.org/)<br>
-[Swiper](https://swiperjs.com/)<br>
 [JWT](https://github.com/auth0/node-jsonwebtoken)<br>
+[Sendgrid](https://sendgrid.com/)<br>
+[mui-otp-input](https://viclafouch.github.io/mui-otp-input/)<br>
 
 # Preview
 ![movierk vercel app_ (1)](https://github.com/roman-kalistratov/movieRK/assets/80212286/c0f647cb-6604-4e48-a556-d24b11431a40)
