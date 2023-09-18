@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { IconButton, useMediaQuery, useTheme } from '@mui/material';
-import { Box, AppBar, Toolbar, Container, Avatar } from '@mui/material';
+import { Box, AppBar, Toolbar, Container } from '@mui/material';
 
 import Navbar from './Navbar';
 import ProfileSection from './ProfileSection';
@@ -22,7 +22,7 @@ const ResponsiveAppBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* desktop */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr:"-125px" }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr:"-85px" }}>
             <Logo />
           </Box>
           {matchUpMd && <Navbar />}

@@ -2,42 +2,15 @@ import { useState } from "react";
 import { Box, Grid, TextField, Paper, Typography, Stack } from "@mui/material";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import { MuiFileInput } from 'mui-file-input'
-import { MuiTelInput } from 'mui-tel-input'
 import { LoadingButton } from "@mui/lab";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import authApi from "../api/modules/auth.api";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
-const SUPPORTED_FORMATS = [
-  "image/jpg",
-  "image/jpeg",
-  "image/gif",
-  "image/png",
-  "image/webp"
-];
-
 const SignupForm = () => {
   const [isRegisterRequest, setIsRegisterRequest] = useState(false);
-  const [errorFileMessage, setErrorFileMessage] = useState(undefined);
-  const [file, setFile] = useState(null);
-  const [phone, setPhone] = useState('+972');
   const navigate = useNavigate();
-
-  const handleChangeFile = (newFile) => {
-    setErrorFileMessage(undefined)
-    if (newFile) {
-      newFile.size > 400000 ? setErrorFileMessage("Max allowed size is 400KB") :
-        SUPPORTED_FORMATS.includes(newFile.type) ? setFile(newFile) : setErrorFileMessage("Not a valid image type")
-    } else {
-      setFile(null)
-    }
-  }
-
-  const handleChangePhone = (newPhone) => {
-    setPhone(newPhone)
-  }
 
   const registerForm = useFormik({
     initialValues: {
@@ -45,7 +18,7 @@ const SignupForm = () => {
       lastname: "",
       email: "",
       password: "",
-      confirmPassword: ""    
+      confirmPassword: ""
     },
     validationSchema: Yup.object({
       firstname: Yup.string()
@@ -61,22 +34,9 @@ const SignupForm = () => {
         .required("confirmPassword is required")
     }),
     onSubmit: async values => {
-      setErrorFileMessage(undefined);
       setIsRegisterRequest(true);
-      setFile(null);
-      const formData = new FormData();
 
-      let newData = {
-        firstname: values.firstname,
-        lastname: values.lastname,
-        email: values.email,
-        password: values.password,       
-        phone: phone.replace(/\s/g, '')
-      }
-      formData.append('data', JSON.stringify(newData));
-      formData.append('file', file);
-
-      const { response, err } = await authApi.register(formData);
+      const { response, err } = await authApi.register(values);
       setIsRegisterRequest(false);
 
       if (response) {
@@ -96,7 +56,9 @@ const SignupForm = () => {
     name: 'firstname',
     value: registerForm.values.firstname,
     required: true,
-    grid: `xs={6} sm={6}`
+    grid: `xs={6} sm={6}`,
+    error: registerForm.touched.firstname && registerForm.errors.firstname !== undefined,
+    helperText: registerForm.touched.firstname && registerForm.errors.firstname
   }, {
     type: "text",
     label: "Last Name",
@@ -109,19 +71,25 @@ const SignupForm = () => {
     label: "Email Address",
     name: 'email',
     value: registerForm.values.email,
-    required: true
+    required: true,
+    error: registerForm.touched.email && registerForm.errors.email !== undefined,
+    helperText: registerForm.touched.email && registerForm.errors.email
   }, {
     type: "password",
     label: "Password",
     name: 'password',
     value: registerForm.values.password,
-    required: true
+    required: true,
+    error: registerForm.touched.password && registerForm.errors.password !== undefined,
+    helperText: registerForm.touched.password && registerForm.errors.password
   }, {
     type: "password",
     label: "Confirm Password",
     name: 'confirmPassword',
     value: registerForm.values.confirmPassword,
-    required: true
+    required: true,
+    error: registerForm.touched.confirmPassword && registerForm.errors.confirmPassword !== undefined,
+    helperText: registerForm.touched.confirmPassword && registerForm.errors.confirmPassword
   }]
 
 
@@ -157,10 +125,10 @@ const SignupForm = () => {
           </Stack>
 
           <Typography component="h1" variant="h2" mt={3}>
-            Register
-          </Typography>
+            Register            
+          </Typography>         
 
-          <Box component="form" onSubmit={registerForm.handleSubmit} sx={{ mt: 1, paddingX: { xs: 2, md: 2, xl: 5 }, width: { xl: "80%" } }}>
+          <Box component="form" onSubmit={registerForm.handleSubmit} sx={{ paddingX: { xs: 2, md: 2, xl: 3 }, width: { xl: "80%" } }}>
             <Grid container columnSpacing={2}>
               {formInputs.map((input, index) => (
                 <Grid key={index} item xs={input.type === "email" ? 12 : 6} sm={input.type === "email" ? 0 : 6}>
@@ -174,54 +142,32 @@ const SignupForm = () => {
                     name={input.name}
                     value={input.value}
                     onChange={registerForm.handleChange}
-                    error={registerForm.touched.firstname && registerForm.errors.firstname !== undefined}
-                    helperText={registerForm.touched.firstname && registerForm.errors.firstname}
+                    error={input.error}
+                    helperText={input.helperText}
                   />
                 </Grid>
               ))}
-
-
-              <Grid item xs={12} sm={6}>
-                <MuiTelInput value={phone} required margin="normal" fullWidth onChange={handleChangePhone} />
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <MuiFileInput value={file}
-                  placeholder="Select an avatar"
-                  fullWidth
-                  margin="normal"
-                  onChange={handleChangeFile}
-                  error={errorFileMessage && errorFileMessage !== undefined}
-                  helperText={errorFileMessage}
-                />
-              </Grid>
             </Grid>
-
-            <Typography variant="body1" marginY={1.5}>
-              By creating an account, you agree to our
-              <Link to="/register" style={{textDecoration:"underline",marginLeft:"4px"}}>Terms & Conditions,</Link>
-              <span style={{marginLeft:"4px"}}>and</span>
-              <Link to="/register" style={{textDecoration:"underline",marginLeft:"4px"}}>Privacy Policy</Link>
-            </Typography>
 
             <LoadingButton
               type="submit"
               fullWidth
               size="large"
               variant="outlined"
+              sx={{ marginTop: 2 }}
               loading={isRegisterRequest}
             >
               Continue
             </LoadingButton>
 
-            <Typography variant="body1" align="left" sx={{ mt: 2, alignSelf: "flex-end" }}>
+            <Typography variant="body1" align="center" sx={{ mt: 2, alignSelf: "flex-end" }}>
               <Link color="secondary" to="/">
-                Already have an account? <span style={{color:"#e78d3d"}}> Sign in </span>
+                Already have an account? <span style={{ color: "#e78d3d", marginLeft: ".2rem" }}> Sign in </span>
               </Link>
             </Typography>
           </Box>
 
-          <Typography variant="body1" color="text.secondary" align="center" sx={{ mt: { xs: 2, md: 0 }, position: { xs: "block", md: "fixed" }, right: 20, bottom: 20 }}>
+          <Typography variant="body1" color="text.secondary" align="center" sx={{ mt: { xs: 6, md: 0 }, position: { xs: "block", md: "fixed" }, right: 20, bottom: 20 }}>
             {'Copyright © '}
             <Link color="secondary" to="https://romank.co.il" target="_blank" rel="noreferrer">
               RK

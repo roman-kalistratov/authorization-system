@@ -8,6 +8,7 @@ import { setUser } from '../../../redux/features/userSlice';
 import authApi from '../../../api/modules/auth.api';
 import edit from '../../../assets/images/edit.webp';
 import user from '../../../assets/images/user.webp';
+import admin from '../../../assets/images/admin.jpg';
 import dashboard from '../../../assets/images/dashboard.webp';
 import settings from '../../../assets/images/settings.webp';
 import logout from '../../../assets/images/log-out.webp';
@@ -45,16 +46,17 @@ const ProfileSection = () => {
     return (
         <Box sx={{ flexGrow: 0, marginLeft: { xs: "0", md: "-4rem" } }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, '&:hover': { backgroundColor: "transparent" } }}>
-                {user ? (
+                {user?.role === "admin" ? (
                     <Avatar>
-                        <img src={`/upload/${user?.avatar}`} alt="user avatar" width="40px" height="40px" />
+                        <img src={admin} alt="user avatar" width="40px" height="40px" />
                     </Avatar>
                 ) : (
                     <Icon color="primary" fontSize="large">
-                        <TfiUser style={{ borderRadius: "50%", border: "1px solid white", padding: "2px", fontSize: "1.7rem" }} />
+                        {user?.picture ? <img src={user?.picture} alt="user avatar" width="35px" height="35px" style={{ "borderRadius": "50%" }} /> :
+                            <TfiUser style={{ borderRadius: "50%", border: "1px solid white", padding: "2px", fontSize: "1.7rem" }} />}
                     </Icon>
                 )}
-                <Typography sx={{ ml: 1, display: { xs: 'none', md: 'flex' } }} textTransform="capitalize" color="primary"> {user ? `Hello ${user?.firstname}` : 'account'} </Typography>
+                <Typography sx={{ ml: 1, display: { xs: 'none', md: 'flex' } }} textTransform="capitalize" color="primary"> {user ? `Hello ${user?.firstname || user?.given_name}` : 'account'} </Typography>
             </IconButton>
 
             <Menu
@@ -93,7 +95,7 @@ const ProfileSection = () => {
             >
 
                 <ListSubheader component="div" sx={{ fontWeight: 700, textAlign: "center", fontSize: "1.2rem" }}>
-                    Hello <Typography component="span" fontWeight={500} color="secondary">{user?.firstname ? user.firstname : "User"}</Typography>
+                    Hello <Typography component="span" fontWeight={500} color="secondary" textTransform="capitalize">{user?.firstname || user?.given_name || "User"}</Typography>
                 </ListSubheader>
 
                 <Divider />

@@ -6,18 +6,18 @@ import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
 const main = [
   {
     display: "home",
-    path: "/",
+    path: "/home",
     state: "home"
   },
   {
     display: "about",
-    path: "/",
+    path: "/home",
     state: "about"
-  },
+  }, 
   {
-    display: "contact",
-    path: "/",
-    state: "contact"
+    display: "protected",
+    path: "/protected",
+    state: "protected"
   }  
 ];
 

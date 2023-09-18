@@ -28,14 +28,17 @@ const LoginForm = () => {
     setTabValue(newValue);
   };
 
+  // switch login to otp after send code to email
   const handleOtp = (newValue) => {
     setOtp(newValue)
   }
 
+  // checking number input to otp
   const validateChar = (value, index) => {
     return matchIsNumeric(value)
   }
 
+  // base form validate
   const loginForm = useFormik({
     initialValues: {
       email: "",
@@ -50,6 +53,7 @@ const LoginForm = () => {
     onSubmit: async values => {
       setIsRequest(true);
 
+      // saving the user in the system
       if (values.remember)
         localStorage.setItem("rememberUser", values.remember);
 
@@ -66,7 +70,7 @@ const LoginForm = () => {
     }
   });
 
-
+  // otp form validate
   const loginFormCode = useFormik({
     initialValues: {
       email: "",
@@ -92,6 +96,7 @@ const LoginForm = () => {
     }
   });
 
+  // automatic trigger after entering all numbers in otp
   const handleComplete = async (value) => {
     const userData = {
       email: userEmail,
@@ -110,7 +115,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Grid container component="main" sx={{ height: '100vh' }}>
+    <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid item xs={false} sm={4} md={6} lg={7}
         sx={{
           backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
@@ -130,6 +135,7 @@ const LoginForm = () => {
             position: 'relative'
           }}>
 
+          {/* back home button */}
           <Stack direction="row" alignItems="center" sx={{ position: "absolute", top: 20, left: 20 }}>
             <KeyboardArrowLeftIcon />
             <Typography variant="body1" align="left" >
@@ -138,12 +144,12 @@ const LoginForm = () => {
               </Link>
             </Typography>
           </Stack>
-
-          <Typography component="h1" variant="h2">
-            Sign in
-          </Typography>
+          {/* back home button */}
 
           <TabContext value={tabValue}>
+            <Typography component="h1" variant="h2" sx={{ mt: { xs: 7, xl: 0 } }}>
+              Sign in
+            </Typography>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList onChange={handleChangeTab} aria-label="tabs" textColor="secondary" sx={{ mt: 1 }}>
                 <Tab label="with a code" value="2" />
@@ -151,9 +157,9 @@ const LoginForm = () => {
               </TabList>
             </Box>
 
-            {/* tabpanel 1 */}
-            <TabPanel value="1">
-              <Box component="form" onSubmit={loginForm.handleSubmit} sx={{ m: "auto", paddingX: { xs: 2, md: 2, xl: 5 }, width: { xl: "80%" } }}>
+            {/* tabpanel 1 base form */}
+            <TabPanel value="1" sx={{ margin: 0, width: { xl: "70%" } }}>
+              <Box component="form" onSubmit={loginForm.handleSubmit} sx={{ m: "auto", width: { xl: "100%" } }}>
                 <TextField
                   margin="normal"
                   required
@@ -167,6 +173,7 @@ const LoginForm = () => {
                   error={loginForm.touched.firstname && loginForm.errors.firstname !== undefined}
                   helperText={loginForm.touched.firstname && loginForm.errors.firstname}
                 />
+
                 <TextField
                   margin="normal"
                   required
@@ -181,40 +188,46 @@ const LoginForm = () => {
                   helperText={loginForm.touched.firstname && loginForm.errors.firstname}
                 />
 
-                <FormControlLabel
-                  control={<Checkbox value="remember" name="remember" color="secondary" onChange={loginForm.handleChange} />}
-                  label="Remember me"
-                />
+                <Grid container mt={1} alignItems="center">
+                  {/* Remember me checbox */}
+                  <Grid item md={6}>
+                    <FormControlLabel
+                      control={<Checkbox value="remember" name="remember" color="secondary" onChange={loginForm.handleChange} />}
+                      label="Remember me"
+                    />
+                  </Grid>
+                  {/* Remember me checbox */}
+
+                  {/* Forgot Password button */}
+                  <Grid item md={6}>
+                    <Typography variant="body1" align="right" color="secondary">
+                      <Link to="/forgot-password">
+                        Forgot Password?
+                      </Link>
+                    </Typography>
+                  </Grid>
+                  {/* Forgot Password button */}
+
+                </Grid>
 
                 <LoadingButton
                   type="submit"
                   fullWidth
                   size="large"
                   variant="outlined"
-                  sx={{ marginTop: 3 }}
+                  sx={{ marginTop: 2 }}
                   loading={isRequest}
                 >
                   Sign In
                 </LoadingButton>
 
-                <Grid container mt={2}>
-                  <Grid item md={6}>
-                    <Typography variant="body1" align="left">
-                      <Link to="/forgot-password">
-                        Forgot Password?
-                      </Link>
-                    </Typography>
-                  </Grid>
-                  <Grid item md={6}>
-                    <Typography variant="body1" align="right">
-                      <Link to="/register">
-                        Don't have an account? <span style={{color:"#e78d3d"}}> Sign Up </span>
-                      </Link>
-                    </Typography>
-                  </Grid>
-                </Grid>
+                <Typography variant="body1" align="center" mt={2}>
+                  <Link to="/register">
+                    Don't have an account? <span style={{ color: "#e78d3d", marginLeft: ".2rem" }}>Sign Up </span>
+                  </Link>
+                </Typography>
 
-                <Typography variant="body1" color="text.secondary" align="center" sx={{ mt: { xs: 2, md: 0 }, position: { xs: "block", md: "fixed" }, right: 20, bottom: 20 }}>
+                <Typography variant="body1" color="text.secondary" align="center" sx={{ mt: { xs: 3, md: 0 }, position: { xs: "block", md: "fixed" }, right: 20, bottom: 20 }}>
                   {'Copyright © '}
                   <Link to="https://romank.co.il" target="_blank" rel="noreferrer">
                     RK
@@ -223,6 +236,8 @@ const LoginForm = () => {
                   {'.'}
                 </Typography>
               </Box>
+
+
             </TabPanel>
             {/* tabpanel 1 */}
 

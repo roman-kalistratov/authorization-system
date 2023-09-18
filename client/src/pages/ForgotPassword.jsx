@@ -8,7 +8,6 @@ import { LoadingButton } from "@mui/lab";
 import userApi from "../api/modules/user.api";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
-
 const ForgotPassword = () => {
     const [isRequest, setIsRequest] = useState(false);
     const navigate = useNavigate();

@@ -8,9 +8,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 const drawerWidth = 240;
 
-const Navbar = ({handleDrawerToggle, mobileOpen}) => {   
+const Navbar = ({ handleDrawerToggle, mobileOpen }) => {
     const { appState } = useSelector((state) => state.appState);
-    const dispatch = useDispatch();  
+    const dispatch = useDispatch();
 
     const drawer = (
         <Box>
@@ -22,7 +22,8 @@ const Navbar = ({handleDrawerToggle, mobileOpen}) => {
             <Divider />
             {menuConfigs.main.map((item, index) => (
                 <Box key={index}>
-                    <MenuItem onClick={handleDrawerToggle} sx={{ justifyContent: "center" }}>
+                    <MenuItem onClick={handleDrawerToggle} component={Link}
+                        to={item.path} sx={{ justifyContent: "center" }}>
                         <Typography textAlign="center" textTransform="capitalize">{item.state}</Typography>
                     </MenuItem>
                     <Divider />
@@ -30,7 +31,7 @@ const Navbar = ({handleDrawerToggle, mobileOpen}) => {
             ))}
         </Box>
     );
-  
+
     return (
         <>
             {/* desktop */}
@@ -82,7 +83,7 @@ const Navbar = ({handleDrawerToggle, mobileOpen}) => {
             {/* desktop */}
 
             {/* mobile */}
-            <Drawer               
+            <Drawer
                 variant="temporary"
                 open={mobileOpen}
                 onClose={handleDrawerToggle}

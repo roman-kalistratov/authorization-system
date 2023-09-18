@@ -1,9 +1,8 @@
 
-import { Box } from '@mui/material';
 import React from 'react';
+import { Box } from '@mui/material';
 
 const Home = () => {
-
   return (
     <Box sx={{
       marginTop: { xs: "-64px" }

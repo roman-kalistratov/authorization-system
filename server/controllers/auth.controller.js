@@ -6,8 +6,7 @@ import generateNumericCode from "../service/generateNumericCode.js";
 
 export const register = async (req, res) => {
   try {
-    const data = JSON.parse(req.body.data);
-    const fileName = (req.file && req.file.filename) || "";
+    const data = req.body;
 
     const isEmailCorrect = await userModel.findOne({ email: data.email });
     if (isEmailCorrect)
@@ -17,8 +16,7 @@ export const register = async (req, res) => {
 
     const newUser = await userModel.create({
       ...data,
-      password: hashPassword,
-      avatar: fileName,
+      password: hashPassword
     });
 
     await newUser.save();
@@ -37,7 +35,7 @@ export const login = async (req, res) => {
       req.body.password,
       user.password
     );
-    
+
     if (!isPasswordCorrect)
       return res.status(400).json({ message: "Wrong password!" });
 
@@ -58,7 +56,6 @@ export const login = async (req, res) => {
 
     const {
       password,
-      role,
       refreshToken: userRefreshToken,
       ...otherDetails
     } = user._doc;
@@ -131,7 +128,6 @@ export const loginWithCode = async (req, res) => {
 
     const {
       password,
-      role,
       refreshToken: userRefreshToken,
       ...otherDetails
     } = user._doc;
@@ -146,7 +142,7 @@ export const loginWithCode = async (req, res) => {
   }
 };
 
-export const logout = async (req, res) => {
+export const logout = async (req, res, next) => {
   try {
     res.clearCookie("refreshToken").status(200).json("Logout Succeeded");
   } catch (err) {

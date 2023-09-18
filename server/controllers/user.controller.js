@@ -19,7 +19,7 @@ export const forgotPassword = async (req, res) => {
     const message = `<div>
     <h2>Please follow this link to reset Your Password. This link is valid till 10 minutes from now.</h2>
     <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
-    <a href="${process.env.CLIENT_URL}/reset-password/${resetToken}/">${resetToken}</a>
+    <a href="${process.env.CLIENT_URL}/reset-password/${resetToken}/">Click to reset password</a>
           </div>`;
 
     sendEmail(email, message);

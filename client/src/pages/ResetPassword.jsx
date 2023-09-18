@@ -68,7 +68,7 @@ const ResetPassword = () => {
                         <KeyboardArrowLeftIcon />
                         <Typography variant="body1" align="left" >
                             <Link color="secondary" to="/">
-                                Home
+                                Back
                             </Link>
                         </Typography>
                     </Stack>
